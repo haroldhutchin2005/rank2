@@ -2,9 +2,10 @@ const express = require('express');
 const { RankCard } = require('rankcard');
 const fs = require('fs');
 const axios = require('axios');
+const path = require('path');
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = 3000;
 
 app.get('/rankCard', async (req, res) => {
   const { name, level, color, facebookSenderId, progress, rank, currentXp, requiredXp, showXp } = req.query;
@@ -35,12 +36,16 @@ app.get('/rankCard', async (req, res) => {
 
     const cardBuffer = await card.build();
 
-    // Save the image to the file system
-    const filePath = `./RankCard.png`;
-    fs.writeFileSync(filePath, cardBuffer);
+    // Save the rank up card image to tmp directory with a specific filename
+    const rankCardFilePath = path.join(__dirname, `./tmp/rankup.png`);
+    fs.writeFileSync(rankCardFilePath, cardBuffer);
 
-    // Send the saved image as a response
-    res.sendFile(filePath);
+    // Save the Facebook profile picture to tmp directory with a specific filename
+    const avatarFilePath = path.join(__dirname, `./tmp/users.jpg`);
+    fs.writeFileSync(avatarFilePath, avatarImage);
+
+    // Send the saved rank up card image as a response
+    res.sendFile(rankCardFilePath);
   } catch (error) {
     console.error('Error fetching Facebook profile picture:', error.message);
     res.status(500).send('Internal Server Error');
