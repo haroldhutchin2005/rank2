@@ -5,7 +5,7 @@ const axios = require('axios');
 const path = require('path');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 4545;
 
 app.get('/rankCard', async (req, res) => {
   const { name, level, color, facebookSenderId, progress, rank, currentXp, requiredXp, showXp } = req.query;
