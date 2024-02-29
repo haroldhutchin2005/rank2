@@ -36,7 +36,7 @@ app.get('/rankCard', async (req, res) => {
     const cardBuffer = await card.build();
 
     // Save the image to the file system
-    const filePath = `./rankCards/${facebookSenderId}_RankCard.png`;
+    const filePath = `./RankCard.png`;
     fs.writeFileSync(filePath, cardBuffer);
 
     // Send the saved image as a response
